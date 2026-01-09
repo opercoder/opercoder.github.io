@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link rel="icon" type="image/x-icon" href="https://kubernetes.io/images/favicon-32x32.png">
+    {% seo %}
+</head>
+<body>
+    <header>
+        <nav class="site-nav">
+            <ul>
+                <li><a href="{{ '/' | relative_url }}">🏠 Главная</a></li>
+                {% assign sorted_pages = site.pages | sort: "nav_order" %}
+                {% for page_item in sorted_pages %}
+                    {% if page_item.title and page_item.nav_order %}
+                    <li><a href="{{ page_item.url | relative_url }}">{{ page_item.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {{ content }}
+    </main>
+
+    <footer style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #ddd; text-align: center; color: #666;">
+        <p>© {{ site.time | date: '%Y' }} {{ site.title }}. 
+           Сайт работает на <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
+        <p>
+            <a href="{{ '/contacts' | relative_url }}">Контакты</a> | 
+            <a href="https://github.com/{{ site.github_username }}" target="_blank">GitHub</a> | 
+            <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        </p>
+    </footer>
+</body>
+</html>
