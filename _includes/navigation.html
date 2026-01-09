@@ -1,0 +1,9 @@
+<!-- _includes/navigation.html -->
+<nav>
+  <a href="{{ '/' | relative_url }}">Главная</a>
+  {% for page in site.pages %}
+    {% if page.title %}
+      <a href="{{ page.url | relative_url }}">{{ page.title }}</a>
+    {% endif %}
+  {% endfor %}
+</nav>
