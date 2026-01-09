@@ -1,22 +1,33 @@
----
-title: "Главная"
-layout: home
-nav_order: 1
----
+title: "Kubernetes Guide"
+description: "Статьи и материалы по Kubernetes"
+baseurl: "" # оставьте пустым для username.github.io
+url: "" # ваш URL
+theme: minima
 
-# Мой сайт
+# Настройки сайта
+author:
+  name: "Ваше Имя"
+  email: "ваш.email@example.com"
 
-## Быстрые ссылки:
-- [📖 Блог](./blog)
-- [👨‍💻 Проекты](./projects)
-- [📞 Контакты](./contact)
+# Настройка плагинов
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 
-## Навигация:
-- [Обо мне](./about.md)
-- [Проекты](./projects.md)
-- [Блог](./blog.md)
+# Меню навигации
+header_pages:
+  - kubernetes.md
+  - links.md
+  - contacts.md
 
-## Последние посты:
-{% for post in site.posts limit:3 %}
-- [{{ post.title }}]({{ post.url }}) – {{ post.date | date: "%d.%m.%Y" }}
-{% endfor %}
+# Сортировка меню
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      nav_order: 10 # значение по умолчанию
+
+# Дата в русском формате
+date_format: "%d.%m.%Y"
