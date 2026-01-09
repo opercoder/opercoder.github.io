@@ -1,33 +1,67 @@
-title: "Kubernetes Guide"
-description: "Статьи и материалы по Kubernetes"
-baseurl: "" # оставьте пустым для username.github.io
-url: "" # ваш URL
-theme: minima
+---
+title: "Главная | Kubernetes Guide"
+layout: default
+nav_order: 1
+---
 
-# Настройки сайта
-author:
-  name: "Ваше Имя"
-  email: "ваш.email@example.com"
+# 🚀 Kubernetes Guide
 
-# Настройка плагинов
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
+Добро пожаловать в мой блог о Kubernetes и DevOps! Здесь я делюсь знаниями, опытом и полезными материалами по контейнеризации и оркестрации.
 
-# Меню навигации
-header_pages:
-  - kubernetes.md
-  - links.md
-  - contacts.md
+## 📌 Навигация по сайту
 
-# Сортировка меню
-defaults:
-  - scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "default"
-      nav_order: 10 # значение по умолчанию
+<div class="nav-cards">
+  <div class="nav-card">
+    <h3><a href="./kubernetes">📚 Kubernetes</a></h3>
+    <p>Статьи и руководства по Kubernetes</p>
+  </div>
+  
+  <div class="nav-card">
+    <h3><a href="./links">🔗 Полезные ссылки</a></h3>
+    <p>Ресурсы, инструменты и документация</p>
+  </div>
+  
+  <div class="nav-card">
+    <h3><a href="./contacts">📞 Контакты</a></h3>
+    <p>Связь со мной и обратная связь</p>
+  </div>
+</div>
 
-# Дата в русском формате
-date_format: "%d.%m.%Y"
+## 📝 Последние добавленные посты
+
+{% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+{% for post in sorted_posts limit:5 %}
+<div class="post-preview">
+  <h3>
+    <a href="{{ post.url }}">{{ post.title }}</a>
+  </h3>
+  <div class="post-meta">
+    <span class="date">{{ post.date | date: "%d.%m.%Y" }}</span>
+    {% if post.tags %}
+      <span class="tags">
+        {% for tag in post.tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </span>
+    {% endif %}
+  </div>
+  <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+  <a href="{{ post.url }}" class="read-more">Читать далее →</a>
+</div>
+{% endfor %}
+
+<hr>
+
+<div class="all-posts-link">
+  <a href="./kubernetes" class="btn">📚 Все статьи по Kubernetes</a>
+</div>
+
+## 🎯 О чем этот сайт?
+
+Этот сайт посвящен:
+- **Kubernetes** и контейнеризации
+- **DevOps** практикам
+- **Cloud Native** технологиям
+- Автоматизации и CI/CD
+
+Подписывайтесь на обновления и следите за новыми материалами!
