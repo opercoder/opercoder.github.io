@@ -11,6 +11,11 @@ nav_order: 1
 - [👨‍💻 Проекты](./projects)
 - [📞 Контакты](./contact)
 
+## Навигация:
+- [Обо мне](./about.md)
+- [Проекты](./projects.md)
+- [Блог](./blog.md)
+
 ## Последние посты:
 {% for post in site.posts limit:3 %}
 - [{{ post.title }}]({{ post.url }}) – {{ post.date | date: "%d.%m.%Y" }}
