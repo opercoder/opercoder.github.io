@@ -38,7 +38,93 @@ main {
           padding: 0 1rem;
 }
 
-/* Список статей */
+/* Секция поиска */
+.search-section {
+          background: white;
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-bottom: 2rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+          position: relative;
+          margin-bottom: 1rem;
+}
+
+#search-input {
+          width: 100%;
+          padding: 12px 40px 12px 16px;
+          font-size: 1rem;
+          border: 2px solid #e0e0e0;
+          border-radius: 8px;
+          transition: all 0.3s;
+          font-family: inherit;
+}
+
+#search-input:focus {
+          outline: none;
+          border-color: #667eea;
+          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.clear-search {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          font-size: 1.2rem;
+          cursor: pointer;
+          color: #999;
+          padding: 4px 8px;
+          border-radius: 4px;
+}
+
+.clear-search:hover {
+          color: #333;
+          background: #f0f0f0;
+}
+
+/* Теги */
+.tags-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+}
+
+.tag {
+          display: inline-block;
+          padding: 6px 14px;
+          background: #f0f0f0;
+          border-radius: 20px;
+          font-size: 0.875rem;
+          cursor: pointer;
+          transition: all 0.2s;
+          user-select: none;
+}
+
+.tag:hover {
+          background: #e0e0e0;
+          transform: translateY(-1px);
+}
+
+.tag.active {
+          background: #667eea;
+          color: white;
+}
+
+.search-stats {
+          font-size: 0.875rem;
+          color: #666;
+          margin-top: 0.5rem;
+          padding-top: 0.5rem;
+          border-top: 1px solid #f0f0f0;
+}
+
+/* Карточки статей */
 .post-card {
           background: white;
           border-radius: 8px;
@@ -70,11 +156,37 @@ main {
           color: #666;
           font-size: 0.875rem;
           margin-bottom: 0.75rem;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          align-items: center;
+}
+
+.post-tags {
+          display: inline-flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+}
+
+.post-tag {
+          display: inline-block;
+          padding: 2px 8px;
+          background: #f0f0f0;
+          border-radius: 12px;
+          font-size: 0.75rem;
+          cursor: pointer;
+          transition: all 0.2s;
+}
+
+.post-tag:hover {
+          background: #667eea;
+          color: white;
 }
 
 .post-excerpt {
           color: #555;
           margin-bottom: 1rem;
+          line-height: 1.5;
 }
 
 .read-more {
@@ -85,6 +197,19 @@ main {
 
 .read-more:hover {
           text-decoration: underline;
+}
+
+/* Подсветка найденных слов */
+mark {
+          background-color: #ffeb3b;
+          padding: 0 2px;
+          border-radius: 2px;
+          color: #333;
+}
+
+/* Скрытые карточки */
+.post-card.hidden {
+          display: none;
 }
 
 /* Страница статьи */
@@ -159,6 +284,24 @@ footer {
           margin-top: 2rem;
 }
 
+/* Анимации */
+@keyframes fadeIn {
+          from {
+                    opacity: 0;
+                    transform: translateY(10px);
+          }
+
+          to {
+                    opacity: 1;
+                    transform: translateY(0);
+          }
+}
+
+.post-card {
+          animation: fadeIn 0.3s ease-out;
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
           main {
                     padding: 0 1rem;
@@ -166,5 +309,16 @@ footer {
 
           #post-content {
                     padding: 1rem;
+          }
+
+          .post-meta {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0.5rem;
+          }
+
+          .tag {
+                    font-size: 0.75rem;
+                    padding: 4px 10px;
           }
 }

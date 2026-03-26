@@ -16,11 +16,27 @@
           </header>
 
           <main>
+                    <!-- Блок поиска и фильтров -->
+                    <div class="search-section">
+                              <div class="search-container">
+                                        <input type="text" id="search-input"
+                                                  placeholder="🔍 Поиск по заголовкам, описанию или тегам..."
+                                                  autocomplete="off">
+                                        <button id="clear-search" class="clear-search" style="display: none;">✕</button>
+                              </div>
+
+                              <div class="tags-container" id="tags-container">
+                                        <div class="tag active" data-tag="all">📌 Все статьи</div>
+                              </div>
+
+                              <div id="search-stats" class="search-stats"></div>
+                    </div>
+
                     <div id="posts-list"></div>
           </main>
 
           <footer>
-                    <p>&copy; 2025 Мой блог</p>
+                    <p>&copy; 2026 Мой блог</p>
           </footer>
 
           <script src="config.js"></script>

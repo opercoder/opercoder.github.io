@@ -18,8 +18,14 @@ async function loadPost() {
         // Обновляем заголовок страницы
         const title = document.querySelector('h1')?.textContent || 'Статья';
         document.title = `${title} - Мой блог`;
+        
+        // Добавляем мета-теги для SEO
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            // Можно добавить описание из эксцерпта
+        }
     } catch (error) {
-        document.getElementById('post-content').innerHTML = '<p>Ошибка загрузки статьи</p>';
+        document.getElementById('post-content').innerHTML = '<p>❌ Ошибка загрузки статьи. Проверьте, существует ли файл.</p>';
         console.error('Error loading post:', error);
     }
 }
