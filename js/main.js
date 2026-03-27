@@ -4,18 +4,18 @@ const ARTICLES_PATH = 'articles/';
 // Список статей с тегами
 const articles = [
     { 
-        file: 'hello-world.md', 
-        title: 'Привет, мир!', 
-        date: '2026-01-15', 
+        file: 'why.md', 
+        title: 'Зачем?', 
+        date: '2026-03-26', 
         excerpt: 'Моя первая статья в блоге. Рассказываю о том, зачем я создал этот блог и что буду публиковать.',
-        tags: ['введение', 'личное', 'блог']
+        tags: ['за жизнь' ]
     },
     { 
-        file: 'my-second-post.md', 
-        title: 'Моя вторая статья', 
-        date: '2026-01-20', 
-        excerpt: 'Продолжаю вести блог и делюсь полезными ресурсами для разработчиков.',
-        tags: ['разработка', 'ресурсы', 'javascript']
+        file: 'screen.md', 
+        title: 'Screen', 
+        date: '2026-03-26', 
+        excerpt: 'Назначение и основные команды screen',
+        tags: ['devops', 'linux' ]
     }
 ];
 
