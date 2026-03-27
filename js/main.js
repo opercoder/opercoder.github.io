@@ -8,14 +8,21 @@ const articles = [
         title: 'Зачем?', 
         date: '2026-03-26', 
         excerpt: 'Моя первая статья в блоге. Рассказываю о том, зачем я создал этот блог и что буду публиковать.',
-        tags: ['за жизнь' ]
+        tags: ['за жизнь']
     },
     { 
         file: 'screen.md', 
         title: 'Screen', 
         date: '2026-03-26', 
         excerpt: 'Назначение и основные команды screen',
-        tags: ['devops', 'linux' ]
+        tags: ['devops', 'linux']
+    },
+    { 
+        file: 'markdown.md', 
+        title: 'Markdown', 
+        date: '2026-03-27', 
+        excerpt: 'Синтаксис Markdown',
+        tags: ['markdown']
     }
 ];
 
