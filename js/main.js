@@ -4,13 +4,6 @@ const ARTICLES_PATH = 'articles/';
 // Список статей с тегами
 const articles = [
     { 
-        file: 'why.md', 
-        title: 'Зачем?', 
-        date: '2026-03-26', 
-        excerpt: 'Моя первая статья в блоге. Рассказываю о том, зачем я создал этот блог и что буду публиковать.',
-        tags: ['за жизнь']
-    },
-    { 
         file: 'screen.md', 
         title: 'Screen', 
         date: '2026-03-26', 
