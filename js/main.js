@@ -22,7 +22,7 @@ const articles = [
         title: 'СМЭВ4', 
         date: '2026-03-31', 
         excerpt: 'Подключение к СМЭВ4',
-        tags: ['smev]
+        tags: ['smev4']
     }
 ];
 
