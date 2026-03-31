@@ -15,11 +15,11 @@
 # Общие настройки агента
 agent:
   # Идентификатор агента
-  id: MCXR28
-  ogrn: '1067760630684'
+  id: TEST01
+  ogrn: '1000000000000'
 keys:
-  alias: x8b4madc
-  password: 2kncx976
+  alias: x1234567
+  password: x1234567
 ```
 
 ## Быстрая установка
