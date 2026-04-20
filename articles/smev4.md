@@ -5,6 +5,8 @@
 [Дистрибутив](https://info.gosuslugi.ru/docs/section/%D0%9F%D0%9E_%D0%B4%D0%BB%D1%8F_%D0%A1%D0%9C%D0%AD%D0%92/)  
 [Документация](https://docs.rtk-soft.ru/podd-docs/latest/podd_source/podd/index.html)  
 [Обучение на Stepik](https://stepik.org/course/210236/syllabus)  
+[Инструкции по работе в ЛК УВ](https://info.gosuslugi.ru/download.php?id=742)  
+[Инструкции по работе в ЕИП НСУД](https://info.gosuslugi.ru/download.php?id=3654)
 
 ## Процесс подключения к СМЭВ4. Опыт развертывания и встречающиеся ошибки  
 
