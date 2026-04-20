@@ -7,6 +7,7 @@
 [Обучение на Stepik](https://stepik.org/course/210236/syllabus)  
 [Инструкции по работе в ЛК УВ](https://info.gosuslugi.ru/download.php?id=742)  
 [Инструкции по работе в ЕИП НСУД](https://info.gosuslugi.ru/download.php?id=3654)
+[Техническое описание ПО "Витрина данных"](https://info.gosuslugi.ru/download.php?id=4223)
 
 ## Процесс подключения к СМЭВ4. Опыт развертывания и встречающиеся ошибки  
 
@@ -84,6 +85,8 @@ chmod +x ./*.sh
 
 - лицензия на Крипто Про (СКЗИ CryptoPro CSP версии 5.0 R3);
 - докер-образ с Astra Linux 1.8.  
+
+### Подготовка к развертыванию агента
 
 В папку files кладется архив с Крипто Про: **files/linux-amd64.tgz**.  
 
@@ -416,253 +419,54 @@ docker run  \
 [ $? -eq 0 ] && echo "Application started. Container name: ${IMG}. Available ports: 8183 (jdbc), 8192 (REST, driver download, OpenAPI specifications), 8171 (API gateway), 8172 (API GW target arch)" || echo "Error starting docker. Run diag.sh and follow instruction"
 ```
 
-
 ## Создание витрины данных
 
-### Регистрация витрины в ЕИП НСУД (описание данных) и ЛК УВ (управление доступом)
- 
-1. Создайте модель данных в ЕИП НСУД.  
-Для описания структуры таблицы зайдите в ЕИП НСУД и создайте новую **Витрину данных**. В ней опишите атрибуты: поле1 (тип, например, строка) и поле2 (тип, например, целое число). Сформируйте модель и отправьте её на согласование.
-1. Зарегистрируйте Регламентированный запрос (РЗ).  
-Определите как потребитель будет запрашивать данные (простой SQL-запрос).
-Зарегистрируйте РЗ типа SQL. В его теле пропишите шаблон SQL-запроса к вашей будущей таблице. Например: SELECT поле1, поле2 FROM ваша_витрина.ваша_таблица.
-1. Добавить критерии доступа к Регламентированному SQL-запросу (Согласовать право доступа).
-1. Зарегистрируйте вашу информационную систему (ИС) и свяжите с витриной.  
-В ЛК УВ зарегистрируйте вашу информационную систему (ИС) и загрузите её сертификат (если еще сделано, описано ранее). Затем в карточке созданной витрины укажите эту ИС как источник данных.
+### ШАГ 1. Регистрация модели данных
 
-## Техническое развертывание витрины данных
+Предусловие: необходим доступ в ЕИП НСУД.  
+На этом шаге вы можете зарегистрировать в ЕИП НСУД реальную модель Витрины.  
+Если у вас нет такой Витрины, предлагаем вам в учебных целях создать простую модель, состоящую из двух таблиц, зарегистрировать ее и отправить информацию о ней в тестовый сервис СМЭВ4 (ПОДД).  
+Подробнее о том, как создать модель и как отправить информацию о ней в СМЭВ4, можно прочитать в документации ЕИП НСУД.  
+**Итог шага:** мнемоника Витрины и скрипт создания БД.
 
-1. Развернуть в своем контуре Компонент Витрина данных.
-1. Настроить Компонент Витрина данных для взаимодействия с Агентом.
-1. Настроить «Сервис Формирования документов» и pebble-шаблоны для формирования печатных форм (опционально, если Поставщик предоставляет печатные формы).
-1. Создать представление view
-(только для витрин версии 2.0.0 и выше).
+### ШАГ 2. Регистрация системы
 
-### Установка на сервере с агентом СМЭВ4
+Предусловие: необходим доступ в ЛК УВ.  
+Вы можете зарегистрировать вашу информационную систему (ИС) с ролью Поставщик в тестовой среде.  
+Если у вас ещё нет информационной системы, то предлагаем вам зарегистрировать тестовую ИС с тестовой ЭП, сгенерированной в ЛК УВ, и присвоить ей роль Поставщик в СМЭВ4.  
+**Итог шага:** мнемоника системы и Агента СМЭВ4, контейнер ЭП.
 
-1. Установка Java 17, Git, Maven, PostgreSQL JDBC Driver.
+### ШАГ 3. Привязка Витрины к системе
 
-``` bash
-sudo apt update
-# Устанавливаем Java 17 (OpenJDK)
-sudo apt install openjdk-17-jdk -y
-# Устанавливаем Git
-sudo apt install git -y
-# Устанавливаем Maven
-sudo apt install maven -y
-```
+Предусловие: необходим доступ в ЛК УВ и ЕИП НСУД.  
+Данный шаг вы будете выполнять в ЛК УВ. Чтобы ваша ИС стала Поставщиком, необходимо связать ее с вашей Витриной в ЛК УВ — указать это в карточке системы.  
 
-1. Клонирование и сборка коннекторов.
+### ШАГ 4. Получение учебной сборки ПО «Витрина данных»
 
-``` bash
-export MAVEN_OPTS="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
-rm -rf ~/.m2/repository
-cd ~
-git clone https://github.com/arenadata/kafka-postgres-connector
-cd kafka-postgres-connector
-mvn clean install -DskipTests=true
-```
+На этом шаге вы познакомитесь с лицензионным договором присоединения – это документ о предоставлении права использования экспериментальной версии программного обеспечения для работы в Системе межведомственного электронного взаимодействия (СМЭВ). Вам необходимо ознакомиться и согласиться с его содержанием. В соответствии со статьей 428 и пунктом 5 статьи 1286 Гражданского кодекса Российской Федерации необходимо осуществить присоединение к этому лицензионному договору, тем самым вы обязуетесь его соблюдать и нести ответственность за его нарушение.  
+После присоединения к лицензионному договору (на следующем шаге данного раздела) вам станут доступны ссылки на скачивание ПО.  
+**Итог шага:** получен для скачивания ПО Datamart Studio и «Витрина данных».
 
-1. Настройка reader коннектора - вставить в ~/kafka-postgres-connector/kafka-postgres-reader/src/main/resources/application.yml:
+### ШАГ 5. Подготовка инфраструктуры
 
-``` yml
-kafka:
-  bootstrap-servers: 'kafka1:9092,kafka2:9092,kafka3:9092'
-  consumer:
-    group:
-      id: kafka-postgres-reader-group
-    auto-offset-reset: earliest
-    properties:
-      key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  topic:
-    input: 'datamart.query.rq'
+**Итог шага:** подготовлены виртуальные машины (ВМ) с необходимой ОС, настроено окружение.
 
-datasource:
-  postgres:
-    host: 'localhost'
-    port: 5432
-    database: 'datamart_db'
-    user: 'datamart_user'
-    password: 'datamart_pass'
-    connection:
-      pool:
-        size: 5
+### ШАГ 6. Установка Datamart Studio, добавление в неё информации о Витрине и ВМ
 
-server:
-  port: 8094
+Вам понадобится мнемоника Витрины, полученная на Шаге 1. Если готовой мнемоники нет, можно использовать вымышленную.  
+**Итог шага:** установлена и подготовлена к установке Витрины программа Datamart Studio.
 
-logging:
-  level:
-    ru.rtlabs: DEBUG
-```
+### ШАГ 7. Установка Витрины
 
-1. Настройка writer коннектора - вставить в ~/kafka-postgres-connector/kafka-postgres-writer/src/main/resources/application.yml:
+Установка компонентов Витрины с помощью Datamart Studio рассматривается отдельно.  
+**Итог шага:** развернута Витрина.
 
-``` yml
-kafka:
-  bootstrap-servers: 'kafka1:9092,kafka2:9092,kafka3:9092'
-  consumer:
-    group:
-      id: kafka-postgres-writer-group
-    auto-offset-reset: earliest
-    properties:
-      key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  topic:
-    input: 'datamart.query.rs'
+### ШАГ 8. Установка и настройка Агента СМЭВ4
 
-datasource:
-  postgres:
-    host: 'localhost'
-    port: 5432
-    database: 'datamart_db'
-    user: 'datamart_user'
-    password: 'datamart_pass'
-    connection:
-      pool:
-        size: 5
+Дистрибутив ПО «Агент СМЭВ4» входит в учебную сборку ПО «Витрина данных».  
+Если у вас есть артефакты, полученные в результате выполнения Шага 2 (мнемоника системы и Агента СМЭВ4, контейнер ЭП), то настройте Агент с реальными данными и проверьте его работу.  
+**Итог шага:** установлен Агент СМЭВ4.
 
-server:
-  port: 8096
+### ШАГ 9. Проверка работы Витрины
 
-logging:
-  level:
-    ru.rtlabs: DEBUG
-```
-
-1. Клонирование и сборка ProStore:
-
-``` bash
-export MAVEN_OPTS="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED"
-cd ~
-git clone https://github.com/arenadata/prostore
-cd prostore
-mvn clean install -DskipTests=true -Dlicense.skip=true
-```
-
-Настройка ~/prostore/dtm-query-execution-core/config/application.yml:
-
-``` yml
-server:
-  port: 8080
-
-spring:
-  application:
-    name: prostore-core
-  
-  datasource:
-    url: jdbc:postgresql://localhost:5432/datamart_db
-    username: datamart_user
-    password: datamart_pass
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 2
-      connection-timeout: 30000
-
-kafka:
-  bootstrap-servers: 'msh-kaffka1.fors.ru:9092,msh-kaffka2.fors.ru:9092,msh-kaffka3.fors.ru:9092'
-  consumer:
-    group-id: prostore-consumer-group
-    auto-offset-reset: earliest
-    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  producer:
-    key-serializer: org.apache.kafka.common.serialization.StringSerializer
-    value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
-# Настройки коннекторов
-jet:
-  connectionString: 'http://localhost:8096'
-  consumerGroup: prostore-group
-  requestTopic: 'datamart.query.rq'
-  responseTopic: 'datamart.query.rs'
-
-# Отключаем ADG/Tarantool плагины
-dtm:
-  plugins:
-    active: postgresql  # Используем только PostgreSQL плагин
-    # adg отключен
-
-# Логирование
-logging:
-  level:
-    io.arenadata.dtm: DEBUG
-    org.springframework: INFO
-    org.apache.kafka: WARN
-```
-
-1. Создание символических ссылок:
-
-``` bash
-# Для Reader
-ln -sf ~/kafka-postgres-connector/kafka-postgres-reader/src/main/resources/application.yml ~/kafka-postgres-connector/kafka-postgres-reader/target/application.yml
-
-# Для Writer
-ln -sf ~/kafka-postgres-connector/kafka-postgres-writer/src/main/resources/application.yml ~/kafka-postgres-connector/kafka-postgres-writer/target/application.yml
-
-# Для Prostore
-ln -sf ~/prostore/dtm-query-execution-core/config/application.yml ~/prostore/dtm-query-execution-core/target/application.yml
-
-# Обновляем ссылки на конфигурацию
-ln -sf ~/prostore/dtm-query-execution-core/config/application.yml ~/prostore/dtm-query-execution-core/target/application.yml
-ln -sf ~/kafka-postgres-connector/kafka-postgres-reader/src/main/resources/application.yml ~/kafka-postgres-connector/kafka-postgres-reader/target/application.yml
-ln -sf ~/kafka-postgres-connector/kafka-postgres-writer/src/main/resources/application.yml ~/kafka-postgres-connector/kafka-postgres-writer/target/application.yml
-```
-
-1. Запуск компонентов:
-
-``` bash
-# 1. Запускаем Kafka-Postgres-Reader
-cd ~/kafka-postgres-connector/kafka-postgres-reader/target
-nohup java -jar kafka-postgres-reader-*.jar > /var/log/kafka-postgres-reader.log 2>&1 &
-
-# 2. Запускаем Kafka-Postgres-Writer
-cd ~/kafka-postgres-connector/kafka-postgres-writer/target
-nohup java -jar kafka-postgres-writer-*.jar > /var/log/kafka-postgres-writer.log 2>&1 &
-
-# 3. Запускаем Prostore
-cd ~/prostore/dtm-query-execution-core/target
-nohup java -jar dtm-query-execution-core-*.jar > /var/log/prostore.log 2>&1 &
-```
-
-1. Проверка работоспособности:
-
-``` bash
-# Проверяем, что процессы запустились
-ps aux | grep -E "kafka-postgres|dtm-query-execution"
-
-# Проверяем логи
-tail -f /var/log/kafka-postgres-reader.log
-tail -f /var/log/kafka-postgres-writer.log
-tail -f /var/log/prostore.log
-
-# Проверяем HTTP-эндпоинты
-curl http://localhost:8094/versions   # Reader
-curl http://localhost:8096/version    # Writer
-curl http://localhost:8080/actuator/health  # Prostore
-```
-
-
-1. Установка Kafka Connect (укажите вашу версию kafka).  
-
-``` bash
-wget https://archive.apache.org/dist/kafka/3.2.1/kafka_2.13-3.2.1.tgz
-tar -xzf kafka_2.13-3.2.1.tgz
-sudo mv kafka_2.13-3.2.1 /opt/kafka-connect
-```
-
-1. Сборка и установка Prostore и коннекторов Arenadata.  
-
-``` bash
-git clone https://github.com/arenadata/prostore ~/prostore
-cd ~/prostore
-mvn clean install -DskipTests=true
-```
-
-``` bash
-git clone https://github.com/arenadata/kafka-postgres-connector ~/kafka-postgres-connector
-cd ~/kafka-postgres-connector
-mvn clean install -DskipTests=true
-```
+НАДО ЗАПОЛНИТЬ.
