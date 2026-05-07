@@ -4,8 +4,8 @@ const ARTICLES_PATH = 'articles/';
 // Список статей с тегами
 const articles = [
     { 
-        file: 'screen_tmux.md', 
-        title: 'Screen && Tmux', 
+        file: 'screen.md', 
+        title: 'Screen', 
         date: '2026-03-26', 
         excerpt: 'Основные команды',
         tags: ['devops', 'linux']
