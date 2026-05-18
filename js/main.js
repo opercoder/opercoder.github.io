@@ -23,7 +23,14 @@ const articles = [
         date: '2026-03-31', 
         excerpt: 'Подключение к СМЭВ4',
         tags: ['smev4']
-    }
+    },
+    { 
+        file: 'k8s_update_certs.md', 
+        title: 'Обновление сертификатов k8s', 
+        date: '2026-05-18', 
+        excerpt: 'Обновление сертификатов k8s',
+        tags: ['k8s']
+    }    
 ];
 
 // Глобальные переменные
